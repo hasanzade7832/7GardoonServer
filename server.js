@@ -32,9 +32,14 @@ app.use(hpp());
 app.get("/", (req, res) => {
   res.status(200).json({
     msg: "this is 7Gardoon file shop course server...",
+  
   });
 });
 
+
+const bannerRoutes = require('./routes/bannerRoutes');
+app.use("/api",bannerRoutes);
+ 
 const PORT = process.env.PORT;
 const DB_URL = process.env.DB_URL;
 
