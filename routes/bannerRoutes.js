@@ -5,8 +5,8 @@ const BannerCtrl = require("../controllers/bannerCtrl");
 
 router.get("/banners", BannerCtrl.getAllBanner); // تغییر در مسیر برای دریافت همه‌ی بنرها
 router.post("/newBanners", BannerCtrl.newBanner);
-router.post("/updateBanners", BannerCtrl.updateBanner);
-router.post("/deleteBanners", BannerCtrl.deleteBanner);
-router.get("/banners/:id", BannerCtrl.getOneBanner); // تغییر در مسیر برای دریافت بنر با آیدی مشخص
-
+router.post("/updateBanners/:id", BannerCtrl.updateBanner);
+router.post("/deleteBanners/:id", BannerCtrl.deleteBanner);
+router.get("/banners/:id", BannerCtrl.getOneBanner);
+router.get("/activeBanners", BannerCtrl.getActiveBanner);
 module.exports = router;
