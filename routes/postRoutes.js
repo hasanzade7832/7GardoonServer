@@ -9,5 +9,6 @@ router.post("/newPost", PostCtrl.newPost);
 router.post("/updatePost/:id", PostCtrl.updatePost);
 router.post("/deletePost/:id", PostCtrl.deletePost);
 router.get("/post/:slug", PostCtrl.getOnePost);
+router.get("/postById/:id", PostCtrl.getOnePostById);
 router.get("/activePost", PostCtrl.getActivePsot);
 module.exports = router;

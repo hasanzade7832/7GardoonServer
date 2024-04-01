@@ -79,6 +79,16 @@ const getOnePost = async (req, res) => {
   }
 };
 
+const getOnePostById = async (req, res) => {
+  try {
+    const GoalPosts = await Post.findById(req.params.id);
+    res.status(200).json(GoalPosts);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "error" });
+  }
+};
+
 const getActivePsot = async (req, res) => {
   try {
     const activePost = await Post.find({ situation: true }).select({
@@ -117,4 +127,5 @@ module.exports = {
   getOnePost,
   getActivePsot,
   getRelPosts,
+  getOnePostById,
 };
