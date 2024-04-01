@@ -11,4 +11,5 @@ router.post("/deletePost/:id", PostCtrl.deletePost);
 router.get("/post/:slug", PostCtrl.getOnePost);
 router.get("/postById/:id", PostCtrl.getOnePostById);
 router.get("/activePost", PostCtrl.getActivePsot);
+router.get("/postPage", PostCtrl.getPostPage);
 module.exports = router;

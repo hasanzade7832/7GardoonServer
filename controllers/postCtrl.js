@@ -12,7 +12,7 @@ const getAllPosts = async (req, res) => {
         .skip((pageNumber - 1) * paginate)
         .limit(paginate);
     } else {
-      posts = await Post.find();
+      posts = await Post.find().sort({ _id: -1 });
     }
     const allPostsNum = await Post.countDocuments();
     res.status(200).json({ posts, allPostsNum });
@@ -91,16 +91,19 @@ const getOnePostById = async (req, res) => {
 
 const getActivePsot = async (req, res) => {
   try {
-    const activePost = await Post.find({ situation: true }).select({
-      title: 1,
-      updatedAt: 1,
-      slug: 1,
-      image: 1,
-      imageAlt: 1,
-      shortDesc: 1,
-      type: 1,
-      pageView: 1,
-    });
+    const activePost = await Post.find({ published: true })
+      .limit(4)
+      .sort({ _id: -1 })
+      .select({
+        title: 1,
+        updatedAT: 1,
+        slug: 1,
+        image: 1,
+        imageAlt: 1,
+        shortDesc: 1,
+        type: 1,
+        pageView: 1,
+      });
 
     res.status(200).json(activePost);
   } catch (err) {
@@ -119,6 +122,38 @@ const getRelPosts = async (req, res) => {
   }
 };
 
+const getPostPage = async (req, res) => {
+  try {
+    let posts;
+    if (req.query.pn && req.query.pgn) {
+      const paginate = req.query.pgn;
+      const pageNumber = req.query.pn;
+      posts = await Post.find({ published: true })
+        .sort({ _id: -1 })
+        .skip((pageNumber - 1) * paginate)
+        .limit(paginate)
+        .select({
+          title: 1,
+          updatedAt: 1,
+          slug: 1,
+          image: 1,
+          imageAlt: 1,
+          shortDesc: 1,
+          type: 1,
+          pageView: 1,
+        });
+    } else {
+      posts = await Post.find({ published: true }).sort({ _id: -1 });
+    }
+    // const allPostsNum = await Post.countDocuments();
+    const allPostsNum = await (await Post.find({ published: true })).length;
+    res.status(200).json({ posts, allPostsNum });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "error" });
+  }
+};
+
 module.exports = {
   getAllPosts,
   newPost,
@@ -128,4 +163,5 @@ module.exports = {
   getActivePsot,
   getRelPosts,
   getOnePostById,
+  getPostPage,
 };

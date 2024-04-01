@@ -12,7 +12,7 @@ const getAllBanner = async (req, res) => {
         .skip((pageNumber - 1) * paginate)
         .limit(paginate);
     } else {
-      banners = await Banners.find();
+      banners = await Banners.find().sort({ _id: -1 });
     }
     const allBannersNum = await Banners.countDocuments();
     res.status(200).json({ banners, allBannersNum }); // ارسال لیست بنرها به همراه تعداد آن‌ها
