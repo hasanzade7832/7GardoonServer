@@ -12,4 +12,5 @@ router.get("/post/:slug", PostCtrl.getOnePost);
 router.get("/postById/:id", PostCtrl.getOnePostById);
 router.get("/activePost", PostCtrl.getActivePsot);
 router.get("/postPage", PostCtrl.getPostPage);
+router.get("/mostViewPage", PostCtrl.getMostViewPage);
 module.exports = router;

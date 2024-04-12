@@ -154,6 +154,25 @@ const getPostPage = async (req, res) => {
   }
 };
 
+const getMostViewPage = async (req, res) => {
+  try {
+    let posts;
+    posts = await Post.find({ published: true })
+      .sort({ pageView: -1 })
+      .limit(3)
+      .select({
+        title: 1,
+        slug: 1,
+        pageView: 1,
+      });
+
+    res.status(200).json({ posts });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "error" });
+  }
+};
+
 module.exports = {
   getAllPosts,
   newPost,
@@ -164,4 +183,5 @@ module.exports = {
   getRelPosts,
   getOnePostById,
   getPostPage,
+  getMostViewPage,
 };
