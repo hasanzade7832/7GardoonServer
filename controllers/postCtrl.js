@@ -173,6 +173,29 @@ const getMostViewPage = async (req, res) => {
   }
 };
 
+const getRelatedPosts = async (req, res) => {
+  try {
+
+    const goalIds = req.body.goalIds;
+    let posts;
+    posts = await Post.find({ _id :goalIds})
+    .select({
+      title: 1,
+      updatedAt: 1,
+      slug: 1,
+      image: 1,
+      imageAlt: 1,
+      shortDesc: 1,
+      type: 1,
+      pageView: 1,
+    });
+    res.status(200).json({ posts });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "error" });
+  }
+};
+
 module.exports = {
   getAllPosts,
   newPost,
@@ -184,4 +207,5 @@ module.exports = {
   getOnePostById,
   getPostPage,
   getMostViewPage,
+  getRelatedPosts
 };
