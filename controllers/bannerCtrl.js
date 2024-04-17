@@ -1,5 +1,6 @@
 const Banners = require("../models/banner");
-const { updateOne, deleteOne } = require("mongoose"); // اضافه کردن متدهای مورد نیاز از mongoose
+const { updateOne, deleteOne } = require("mongoose");
+const { validationResult } = require("express-validator");
 
 const getAllBanner = async (req, res) => {
   try {
@@ -10,7 +11,13 @@ const getAllBanner = async (req, res) => {
       banners = await Banners.find()
         .sort({ _id: -1 })
         .skip((pageNumber - 1) * paginate)
-        .limit(paginate);
+        .limit(paginate)
+        .select({
+          image: 1,
+          imageAlt: 1,
+          date: 1,
+          situation: 1,
+        });
     } else {
       banners = await Banners.find().sort({ _id: -1 });
     }
@@ -24,59 +31,51 @@ const getAllBanner = async (req, res) => {
 
 const newBanner = async (req, res) => {
   try {
-    await Banners.create(req.body);
-    res.status(200).json({ msg: "بنر با موفقیت ذخیره شد" });
-
-    // const newBanner = new Banners({
-    //   image: req.body.image,
-    //   imageAlt: req.body.imageAlt,
-    //   situation: req.body.situation,
-    //   link: req.body.link,
-    //   date: new Date().toLocaleDateString("fa-IR", {
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //   }),
-    // });
-    // newBanner
-    //   .save()
-    //   .then((d) => {
-    //     res.status(200).json({ msg: "بنر با موفقیت ذخیره شد" });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     res.status(400).json({ msg: "هنگام ذخیره بنر مشکلی پیش آمد" });
-    //   });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ msg: errors.errors[0].msg });
+    } else {
+      if (
+        req.body.image.endsWith(".jpg") ||
+        req.body.image.endsWith(".png") ||
+        req.body.image.endsWith(".jpeg") ||
+        req.body.image.endsWith(".webp")
+      ) {
+        await Banners.create(req.body);
+        res.status(200).json({ msg: "بنر با موفقیت ذخیره شد" });
+      } else {
+        res.status(422).json({ msg: "خطایی رخ داد" });
+      }
+    }
   } catch (err) {
     console.log(err);
-    res.status(400).json({ msg: "error" });
+    res.status(400).json(err);
   }
 };
 
 const updateBanner = async (req, res) => {
+  const errors = validationResult(req);
   try {
-    await Banners.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).json({ msg: "بنر با موفقیت بروز رسانی شد" });
-    // await Banners.updateOne(
-    //   // استفاده از updateOne برای بروزرسانی بنر
-    //   { _id: req.body.goalId },
-    //   {
-    //     $set: {
-    //       image: req.body.image,
-    //       imageAlt: req.body.imageAlt,
-    //       situation: req.body.situation,
-    //       link: req.body.link,
-    //       date: new Date().toLocaleDateString("fa-IR", {
-    //         hour: "2-digit",
-    //         minute: "2-digit",
-    //       }),
-    //     },
-    //   }
-    // );
+    if (!errors.isEmpty()) {
+      res.status(422).json({ msg: errors.errors[0].msg });
+    } else {
+      if (
+        req.body.image.endsWith(".jpg") ||
+        req.body.image.endsWith(".png") ||
+        req.body.image.endsWith(".jpeg") ||
+        req.body.image.endsWith(".webp")
+      ) {
+        await Banners.findByIdAndUpdate(req.params.id, req.body, {
+          new: true,
+        });
+        res.status(200).json({ msg: "بنر با موفقیت بروز رسانی شد" });
+      } else {
+        res.status(422).json({ msg: "خطایی رخ داد" });
+      }
+    }
   } catch (err) {
     console.log(err);
-    res.status(400).json({ msg: "error" });
+    res.status(400).json(err);
   }
 };
 
@@ -85,7 +84,6 @@ const deleteBanner = async (req, res) => {
     await Banners.findByIdAndDelete(req.params.id, req.body, {
       new: true,
     });
-    // await Banners.deleteOne({ _id: req.body.goalId }); // استفاده از deleteOne برای حذف بنر
     res.status(200).json({ msg: "بنر با موفقیت حذف شد" });
   } catch (err) {
     console.log(err);

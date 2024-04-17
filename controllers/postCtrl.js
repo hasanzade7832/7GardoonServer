@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const { updateOne, deleteOne } = require("mongoose");
+const { validationResult } = require("express-validator");
 
 const getAllPosts = async (req, res) => {
   try {
@@ -10,7 +11,15 @@ const getAllPosts = async (req, res) => {
       posts = await Post.find()
         .sort({ _id: -1 })
         .skip((pageNumber - 1) * paginate)
-        .limit(paginate);
+        .limit(paginate)
+        .select({
+          title: 1,
+          updatedAT: 1,
+          image: 1,
+          imageAlt: 1,
+          published: 1,
+          pageView: 1,
+        });
     } else {
       posts = await Post.find().sort({ _id: -1 });
     }
@@ -24,28 +33,56 @@ const getAllPosts = async (req, res) => {
 
 const newPost = async (req, res) => {
   try {
-    const data = req.body;
-    data.slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
-    await Post.create(req.body);
-    res.status(200).json({ msg: "مقاله با موفقیت ذخیره شد" });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ msg: errors.errors[0].msg });
+    } else {
+      if (
+        req.body.image.endsWith(".jpg") ||
+        req.body.image.endsWith(".png") ||
+        req.body.image.endsWith(".jpeg") ||
+        req.body.image.endsWith(".webp")
+      ) {
+        const data = req.body;
+        data.slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+        await Post.create(req.body);
+        res.status(200).json({ msg: "مقاله با موفقیت ذخیره شد" });
+      } else {
+        res.status(422).json({ msg: "خطایی رخ داد" });
+      }
+    }
   } catch (err) {
     console.log(err);
-    res.status(400).json({ msg: "error" });
+    res.status(400).json(err);
   }
 };
 
 const updatePost = async (req, res) => {
   try {
-    const data = req.body;
-    data.slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ msg: errors.errors[0].msg });
+    } else {
+      if (
+        req.body.image.endsWith(".jpg") ||
+        req.body.image.endsWith(".png") ||
+        req.body.image.endsWith(".jpeg") ||
+        req.body.image.endsWith(".webp")
+      ) {
+        const data = req.body;
+        data.slug = req.body.slug.replace(/\s+/g, "-").toLowerCase();
 
-    await Post.findByIdAndUpdate(req.params.id, data, {
-      new: true,
-    });
-    res.status(200).json({ msg: "مقاله با موفقیت بروز رسانی شد" });
+        await Post.findByIdAndUpdate(req.params.id, data, {
+          new: true,
+        });
+        res.status(200).json({ msg: "مقاله با موفقیت بروز رسانی شد" });
+      } else {
+        res.status(422).json({ msg: "خطایی رخ داد" });
+      }
+    }
   } catch (err) {
     console.log(err);
-    res.status(400).json({ msg: "error" });
+    res.status(400).json(err);
   }
 };
 
@@ -112,6 +149,7 @@ const getActivePsot = async (req, res) => {
   }
 };
 
+//this related posts is for add or update for blog
 const getRelPosts = async (req, res) => {
   try {
     const allPosts = await Post.find().select({ title: 1 });
@@ -134,7 +172,7 @@ const getPostPage = async (req, res) => {
         .limit(paginate)
         .select({
           title: 1,
-          updatedAt: 1,
+          updatedAT: 1,
           slug: 1,
           image: 1,
           imageAlt: 1,
@@ -173,15 +211,14 @@ const getMostViewPage = async (req, res) => {
   }
 };
 
+//this related posts is for single blog page
 const getRelatedPosts = async (req, res) => {
   try {
-
     const goalIds = req.body.goalIds;
     let posts;
-    posts = await Post.find({ _id :goalIds})
-    .select({
+    posts = await Post.find({ _id: goalIds }).select({
       title: 1,
-      updatedAt: 1,
+      updatedAT: 1,
       slug: 1,
       image: 1,
       imageAlt: 1,
@@ -207,5 +244,5 @@ module.exports = {
   getOnePostById,
   getPostPage,
   getMostViewPage,
-  getRelatedPosts
+  getRelatedPosts,
 };
