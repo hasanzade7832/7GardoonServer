@@ -44,7 +44,7 @@ const newBanner = async (req, res) => {
         await Banners.create(req.body);
         res.status(200).json({ msg: "بنر با موفقیت ذخیره شد" });
       } else {
-        res.status(422).json({ msg: "خطایی رخ داد" });
+        res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
       }
     }
   } catch (err) {
@@ -70,7 +70,7 @@ const updateBanner = async (req, res) => {
         });
         res.status(200).json({ msg: "بنر با موفقیت بروز رسانی شد" });
       } else {
-        res.status(422).json({ msg: "خطایی رخ داد" });
+        res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
       }
     }
   } catch (err) {

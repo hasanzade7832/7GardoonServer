@@ -10,8 +10,8 @@ router.post(
   [
     check(
       "imageAlt",
-      "تعداد کاراکتر آلت تصویر باید بیشتر از 8 کاراکتر باشد ..."
-    ).isLength({ min: 8 }),
+      "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
+    ).isLength({ min: 4 }),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   BannerCtrl.newBanner
@@ -21,8 +21,8 @@ router.post(
   [
     check(
       "imageAlt",
-      "تعداد کاراکتر آلت تصویر باید بیشتر از 8 کاراکتر باشد ..."
-    ).isLength({ min: 8 }),
+      "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
+    ).isLength({ min: 4 }),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   BannerCtrl.updateBanner

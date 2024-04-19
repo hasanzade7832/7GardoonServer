@@ -10,7 +10,7 @@ router.post(
   [
     check(
       "title",
-      "تعداد کاراکتر عنوان باید بیشتر از4 کاراکتر باشد ..."
+      "تعداد کاراکتر عنوان پست باید بیشتر از4 کاراکتر باشد ..."
     ).isLength({ min: 4 }),
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedPosts", "خطایی رخ داد").isArray(),
@@ -23,7 +23,7 @@ router.post(
   [
     check(
       "title",
-      "تعداد کاراکتر آلت تصویر باید بیشتر از4 کاراکتر باشد ..."
+      "تعداد کاراکتر عنوان پست باید از 4 حرف بیشتر باشد..."
     ).isLength({ min: 4 }),
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedPosts", "خطایی رخ داد").isArray(),

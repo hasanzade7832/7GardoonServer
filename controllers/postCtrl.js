@@ -34,6 +34,7 @@ const getAllPosts = async (req, res) => {
 const newPost = async (req, res) => {
   try {
     const errors = validationResult(req);
+    console.log("eeeeeeeeeeeee", errors);
     if (!errors.isEmpty()) {
       res.status(422).json({ msg: errors.errors[0].msg });
     } else {
@@ -48,7 +49,7 @@ const newPost = async (req, res) => {
         await Post.create(req.body);
         res.status(200).json({ msg: "مقاله با موفقیت ذخیره شد" });
       } else {
-        res.status(422).json({ msg: "خطایی رخ داد" });
+        res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
       }
     }
   } catch (err) {
@@ -77,7 +78,7 @@ const updatePost = async (req, res) => {
         });
         res.status(200).json({ msg: "مقاله با موفقیت بروز رسانی شد" });
       } else {
-        res.status(422).json({ msg: "خطایی رخ داد" });
+        res.status(422).json({ msg: "فرمت عکس اشتباه هست." });
       }
     }
   } catch (err) {
@@ -152,7 +153,7 @@ const getActivePsot = async (req, res) => {
 //this related posts is for add or update for blog
 const getRelPosts = async (req, res) => {
   try {
-    const allPosts = await Post.find().select({ title: 1 });
+    const allPosts = await Post.find({ published: true }).select({ title: 1 });
     res.status(200).json(allPosts);
   } catch (err) {
     console.log(err);
