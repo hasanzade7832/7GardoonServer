@@ -37,8 +37,10 @@ app.get("/", (req, res) => {
 
 const bannerRoutes = require("./routes/bannerRoutes");
 const postsRoutes = require("./routes/postRoutes");
+const sliderRoutes = require("./routes/sliderRoutes");
 app.use("/api", bannerRoutes);
 app.use("/api", postsRoutes);
+app.use("/api", sliderRoutes);
 
 const PORT = process.env.PORT;
 const DB_URL = process.env.DB_URL;
