@@ -104,7 +104,7 @@ const getOneSlider = async (req, res) => {
 
 const getActiveSlider = async (req, res) => {
   try {
-    const activeSliders = await Slider.find({ situation: true }).select({
+    const activeSliders = await Slider.find({ situation: true }).sort({sorter:1}).select({
       image: 1,
       imageAlt: 1,
       link: 1,
