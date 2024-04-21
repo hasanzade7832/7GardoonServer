@@ -20,7 +20,7 @@ const CategorySchema = new mongoose.Schema({
        required:true,
        type:Boolean
    },
-   link:{
+   shortDesc:{
        required:true,
        type:String
    },
