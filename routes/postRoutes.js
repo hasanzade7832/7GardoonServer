@@ -13,8 +13,8 @@ router.post(
       "تعداد کاراکتر عنوان پست باید بیشتر از4 کاراکتر باشد ..."
     ).isLength({ min: 4 }),
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
-    check("relatedPosts", "خطایی رخ داد").isArray(),
-    check("tags", "خطایی رخ داد ").isArray(),
+    check("relatedPosts", "فرمت بخش های مرتبط اشتباه است").isArray(),
+    check("tags", "فرمت بخش تگ ها اشتباه است").isArray(),
   ],
   PostCtrl.newPost
 );
