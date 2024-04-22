@@ -13,9 +13,9 @@ router.post(
       "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
     ).isLength({ min: 4 }),
     check(
-        "title",
-        "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
-      ).isLength({ min: 4 }),
+      "title",
+      "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
+    ).isLength({ min: 4 }),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   CategoryCtrl.newCategory
@@ -28,14 +28,15 @@ router.post(
       "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
     ).isLength({ min: 4 }),
     check(
-        "title",
-        "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
-      ).isLength({ min: 4 }),
+      "title",
+      "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
+    ).isLength({ min: 4 }),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   CategoryCtrl.updateCategory
 );
 router.post("/deleteCategories/:id", CategoryCtrl.deleteCategory);
-router.get("/categories/:slug", CategoryCtrl.getOnePost);
+router.get("/get-category/:slug", CategoryCtrl.getOnePost);
+router.get("/get-categoryById/:id", CategoryCtrl.getOneCategory);
 router.get("/activeCategories", CategoryCtrl.getActiveCategory);
 module.exports = router;
