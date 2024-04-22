@@ -102,15 +102,20 @@ const deletePost = async (req, res) => {
 const getOnePost = async (req, res) => {
   try {
     const GoalPosts = await Post.findOne({ slug: req.params.slug });
+    if (GoalPosts.published == true) {
+      //Add one Post TO Page view
+      const newPost = {
+        pageView: GoalPosts.pageView + 1,
+      };
+      await Post.findByIdAndUpdate(GoalPosts._id, newPost, {
+        new: true,
+      });
+      res.status(200).json(GoalPosts)
+    }
+    else{
+      res.status(400).json({ msg: "پست هنوز منتشر نشده است ...." });
+    }
 
-    //Add one Post TO Page view
-    const newPost = {
-      pageView: GoalPosts.pageView + 1,
-    };
-    await Post.findByIdAndUpdate(GoalPosts._id, newPost, {
-      new: true,
-    });
-    res.status(200).json(GoalPosts);
   } catch (err) {
     console.log(err);
     res.status(400).json({ msg: "error" });
