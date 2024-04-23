@@ -11,11 +11,15 @@ router.post(
     check(
       "imageAlt",
       "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
-    ).isLength({ min: 4 }),
+    ).isLength({min:4}),
     check(
       "title",
-      "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
-    ).isLength({ min: 4 }),
+      "تعداد کاراکتر عنوان باید 4 تا 24 کاراکتر باشد ..."
+    ).isLength({min:4, max:24}),
+    check(
+      "shortDesc",
+      "تعداد کاراکتر توضیحات کوتاه باید 4 تا 40 کاراکتر باشد ..."
+    ).isLength({min:4, max:40}),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   CategoryCtrl.newCategory
@@ -26,11 +30,15 @@ router.post(
     check(
       "imageAlt",
       "تعداد کاراکتر آلت تصویر باید بیشتر از 4 کاراکتر باشد ..."
-    ).isLength({ min: 4 }),
+    ).isLength({min:4}),
     check(
       "title",
-      "تعداد کاراکتر عنوان باید بیشتر از 4 کاراکتر باشد ..."
-    ).isLength({ min: 4 }),
+      "تعداد کاراکتر عنوان باید 4 تا 24 کاراکتر باشد ..."
+    ).isLength({min:4, max:24}),
+    check(
+      "shortDesc",
+      "تعداد کاراکتر  توضیحات کوتاه باید 4 تا 40 کاراکتر باشد ..."
+    ).isLength({min:4, max:40}),
     check("situation", "فرمت بخش انتشار اشتباه است ").isBoolean(),
   ],
   CategoryCtrl.updateCategory

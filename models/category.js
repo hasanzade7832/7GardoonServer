@@ -20,6 +20,13 @@ const CategorySchema = new mongoose.Schema({
        required:true,
        type:Boolean
    },
+   typeOfProduct:{
+       required:true,
+       type:String,
+       enum:[
+        "graphic","app","book"
+       ]
+   },
    shortDesc:{
        required:true,
        type:String

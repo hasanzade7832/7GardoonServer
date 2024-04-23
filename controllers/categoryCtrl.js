@@ -17,6 +17,7 @@ const getAllCategory = async (req, res) => {
           imageAlt: 1,
           title: 1,
           situation: 1,
+          typeOfProduct:1
         });
     } else {
       categories = await Categories.find().sort({ _id: -1 });
@@ -109,6 +110,7 @@ const getActiveCategory = async (req, res) => {
       title: 1,
       slug: 1,
       shortDesc: 1,
+      typeOfProduct:1
     });
 
     res.status(200).json(activeCategories);
