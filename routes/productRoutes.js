@@ -16,7 +16,7 @@ router.post(
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedProducts", "فرمت بخش های مرتبط اشتباه است").isArray(),
     check("typeOfProduct", "تعداد کاراکتر بخش تایپ محصول اشتباه است ").isLength(
-      { min: 4 }
+      { min: 2 }
     ),
   ],
   PostCtrl.newProducts
@@ -31,7 +31,7 @@ router.post(
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedProducts", "فرمت بخش های مرتبط اشتباه است").isArray(),
     check("typeOfProduct", "تعداد کاراکتر بخش تایپ محصول اشتباه است ").isLength(
-      { min: 4 }
+      { min: 2 }
     ),
   ],
   PostCtrl.updateProducts
