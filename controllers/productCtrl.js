@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Category = require("../models/category")
 const { updateOne, deleteOne } = require("mongoose");
 const { validationResult } = require("express-validator");
 
@@ -214,6 +215,18 @@ const getRelProducts = async (req, res) => {
   }
 };
 
+const getRelCategories = async (req, res) => {
+  try {
+    const allCategories = await Category.find({ situation: true }).select({
+      title: 1,
+    });
+    res.status(200).json(allCategories);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg: "error" });
+  }
+};
+
 const getPostPage = async (req, res) => {
   try {
     let products;
@@ -298,6 +311,7 @@ module.exports = {
   getOneProduct,
   getActiveProduct,
   getRelProducts,
+  getRelCategories,
   getOneProductById,
   getPostPage,
   getMostViewProduct,

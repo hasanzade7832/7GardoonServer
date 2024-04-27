@@ -93,4 +93,4 @@ const Product = new mongoose.Schema({
     default: false,
   },
 });
-module.exports = mongoose.model("Post", Product);
+module.exports = mongoose.model("Product", Product);

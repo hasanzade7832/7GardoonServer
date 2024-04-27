@@ -5,6 +5,7 @@ const PostCtrl = require("../controllers/productCtrl");
 
 router.get("/products", PostCtrl.getAllProducts);
 router.get("/productRel", PostCtrl.getRelProducts);
+router.get("/categoryRel", PostCtrl.getRelCategories);
 router.post(
   "/newProduct",
   [
@@ -15,7 +16,7 @@ router.post(
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedProducts", "فرمت بخش های مرتبط اشتباه است").isArray(),
     check("typeOfProduct", "تعداد کاراکتر بخش تایپ محصول اشتباه است ").isLength(
-      { min: 8 }
+      { min: 4 }
     ),
   ],
   PostCtrl.newProducts
@@ -30,7 +31,7 @@ router.post(
     check("published", "فرمت بخش انتشار اشتباه است ").isBoolean(),
     check("relatedProducts", "فرمت بخش های مرتبط اشتباه است").isArray(),
     check("typeOfProduct", "تعداد کاراکتر بخش تایپ محصول اشتباه است ").isLength(
-      { min: 8 }
+      { min: 4 }
     ),
   ],
   PostCtrl.updateProducts
