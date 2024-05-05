@@ -155,6 +155,7 @@ const getActiveProduct = async (req, res) => {
         features: 1,
         buyNumber: 1,
         pageView: 1,
+        categories: 1,
       });
     const activeBook = await Product.find({
       published: true,
@@ -172,6 +173,7 @@ const getActiveProduct = async (req, res) => {
         features: 1,
         buyNumber: 1,
         pageView: 1,
+        categories: 1,
       });
     const activeGraphic = await Product.find({
       published: true,
@@ -189,6 +191,7 @@ const getActiveProduct = async (req, res) => {
         features: 1,
         buyNumber: 1,
         pageView: 1,
+        categories: 1,
       });
 
     res.status(200).json({
